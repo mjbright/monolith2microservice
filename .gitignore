@@ -1,2 +1,5 @@
 Quiz.Flask.Deepseek/*
 **/EXCLUDE/
+**/__pycache__/
+**/*.bak
+**/bak

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="leaderboard-container">
+    <h2>Top Performers</h2>
+    
+    {% if participants %}
+        <div class="leaderboard">
+            {% for participant in participants %}
+            <div class="leaderboard-item {% if loop.index == 1 %}first{% elif loop.index == 2 %}second{% elif loop.index == 3 %}third{% endif %}">
+                <div class="rank">#{{ loop.index }}</div>
+                <div class="name">{{ participant.name }}</div>
+                <div class="score">
+                    {{ participant.score }}/{{ participant.total_questions }} 
+                    ({{ participant.percentage }}%)
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-data">No participants yet. Be the first to take the quiz!</p>
+    {% endif %}
+    
+    <div class="action-buttons">
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Take the Quiz</a>
+    </div>
+</div>
+{% endblock %}

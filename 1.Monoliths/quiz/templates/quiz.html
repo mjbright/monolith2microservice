@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="quiz-container">
+    <div class="quiz-header">
+        <h2>Quiz Time!</h2>
+        <div class="quiz-progress">
+            <span id="progress-text">Question 1 of 5</span>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+        <div class="score-display">
+            Score: <span id="current-score">0</span>
+        </div>
+    </div>
+    
+    <!-- Timer Display -->
+    <div class="timer-container">
+        <div class="timer" id="timer">
+            Time left: <span id="time-left">12</span>s
+        </div>
+    </div>
+    
+    <div id="quiz-content">
+        <div id="question-container" class="question-container">
+            <h3 id="question-text">Loading question...</h3>
+            <div id="options-container" class="options-container">
+                <!-- Options will be loaded here by JavaScript -->
+            </div>
+            <div class="submit-container">
+                <button id="submit-answer" class="btn btn-primary" disabled>Submit Answer</button>
+            </div>
+        </div>
+        
+        <div id="result-container" class="result-container" style="display: none;">
+            <h3 id="result-title"></h3>
+            <p id="result-message"></p>
+            <button id="next-question" class="btn btn-secondary">Next Question</button>
+        </div>
+        
+        <div id="quiz-complete" class="quiz-complete" style="display: none;">
+            <h3>Quiz Complete!</h3>
+            <p>Your final score: <span id="final-score"></span></p>
+            <div class="action-buttons">
+                <a href="{{ url_for('leaderboard') }}" class="btn btn-primary">View Leaderboard</a>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Take Quiz Again</a>
+            </div>
+        </div>
+
+        <!-- Time's Up Modal -->
+        <div id="timeup-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3>Time's Up! ⏰</h3>
+                <p>You ran out of time for this question.</p>
+                <button id="timeup-continue" class="btn btn-primary">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
