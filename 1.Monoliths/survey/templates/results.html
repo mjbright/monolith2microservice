@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-container">
+    <h2>Survey Results</h2>
+    
+    <div class="results-header">
+        <div class="participant-count">
+            Total Participants: <span id="total-participants">0</span>
+        </div>
+    </div>
+
+    <!-- Add this in results.html after the results-header div -->
+  <div class="export-controls">
+    <div class="action-buttons">
+        <button onclick="exportResults('detailed')" class="btn btn-primary">
+            <i class="export-icon">📥</i> Export Detailed Results (CSV)
+        </button>
+        <button onclick="exportResults('summary')" class="btn btn-secondary">
+            <i class="export-icon">📊</i> Export Summary (CSV)
+        </button>
+        <button onclick="clearResults()" class="btn" style="background: #E53E3E; color: white;">
+            <i class="clear-icon">🗑️</i> Clear All Results
+        </button>
+    </div>
+    
+    <div class="stats-info" style="margin-top: 1rem; padding: 0.75rem; background: #F7FAFC; border-radius: 6px; font-size: 0.9rem;">
+        <span id="stats-display">Loading statistics...</span>
+    </div>
+  </div>
+
+    
+    <div id="results-content">
+        <div id="loading-message" class="loading-message">
+            Loading results...
+        </div>
+        <div id="charts-container" class="charts-container" style="display: none;">
+            <!-- Charts and results will be loaded here -->
+        </div>
+        <div id="no-data-message" class="no-data-message" style="display: none;">
+            No survey responses yet. Be the first to take the survey!
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='script.js') }}?v=1.0"></script>
+<script>
+    // Load results when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        loadSurveyResults();
+        loadParticipantCount();
+    });
+</script>
+
+<script>
+// Load statistics
+function loadStats() {
+    fetch('/get_stats')
+        .then(response => response.json())
+        .then(data => {
+            const statsElement = document.getElementById('stats-display');
+            statsElement.innerHTML = `
+                <strong>📈 Current Statistics:</strong> 
+                ${data.participant_count} participants | 
+                ${data.total_responses} total responses |
+                Latest: ${data.latest_participant || 'None'}
+            `;
+        })
+        .catch(error => {
+            console.error('Error loading stats:', error);
+        });
+}
+
+// Export results
+function exportResults(type) {
+    const url = type === 'summary' ? '/export/summary.csv' : '/export/results.csv';
+    window.location.href = url;
+}
+
+// Clear results with confirmation
+function clearResults() {
+    if (confirm('⚠️ Are you sure you want to clear ALL survey results? A backup will be created automatically.')) {
+        fetch('/clear_results', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(`✅ Results cleared successfully! ${data.backup_created ? 'A backup was created.' : 'No data to backup.'}`);
+                loadStats(); // Refresh stats
+                // Refresh the page to show empty results
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                alert(`❌ Error: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('❌ An error occurred while clearing results.');
+        });
+    }
+}
+
+// Load stats when page loads
+document.addEventListener('DOMContentLoaded', loadStats);
+</script>
+
+{% endblock %}

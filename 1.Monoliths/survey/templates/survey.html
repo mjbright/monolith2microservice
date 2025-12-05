@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="survey-container">
+    <div class="survey-header">
+        <h2>Survey Questions</h2>
+        <div class="survey-progress">
+            <span id="progress-text">Question 1 of 6</span>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="survey-content">
+        <div id="question-container" class="question-container">
+            <h3 id="question-text">Loading question...</h3>
+            <div id="options-container" class="options-container">
+                <!-- Options will be loaded here by JavaScript -->
+            </div>
+            <div id="text-input-container" class="text-input-container" style="display: none;">
+                <textarea id="text-response" placeholder="Type your response here..." rows="4"></textarea>
+            </div>
+            <div class="navigation-buttons">
+                <button id="prev-question" class="btn btn-secondary">Previous</button>
+                <button id="next-question" class="btn btn-primary">Next Question</button>
+                <button id="submit-survey" class="btn btn-ready" style="display: none;">Submit Survey</button>
+            </div>
+        </div>
+        
+        <div id="survey-complete" class="survey-complete" style="display: none;">
+            <h3>Survey Complete! 🎉</h3>
+            <p id="completion-message">Thank you for your feedback!</p>
+            <div class="action-buttons">
+                <a href="{{ url_for('results') }}" class="btn btn-primary">View Results</a>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

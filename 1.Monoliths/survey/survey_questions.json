@@ -1,0 +1,22 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "type": "sentiment",
+      "question": "How did today go for you ?",
+      "options": ["perfect", "good", "ok", "ok, but I have a suggestion", "Not good - see comments"]
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "question": "OPTIONAL: Please describe here any issues, suggestions",
+      "options": []
+    },
+    {
+      "id": 3,
+      "type": "text",
+      "question": "OPTIONAL: Request for help",
+      "options": []
+    }
+  ]
+}
