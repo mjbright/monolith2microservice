@@ -1,14 +1,31 @@
 #!/usr/bin/env python3
 
+
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 import os
 
-#PORT=3000
-#PORT=29173
-PORT=30999
+import socket, platform
+
+PORT       = 3000
+
+os = platform.system()
+#print(os)
+match os:
+    case "Linux":
+        serverhost=socket.gethostname()
+        serverip=socket.gethostbyname(socket.gethostname())
+    case "Darwin":
+        serverhost=socket.gethostname()
+        serverip=[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]
+    case _:
+        print(f'Unknown OS type {os}')
+        sys.exit(1)
+
+#print(f'serverhost={serverhost} serverip={serverip}')
+#print(datetime.now(timezone.utc))
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -40,8 +57,41 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+## -- START OF asciitext hack for wget/curl requests --------------------------------------------------
+def readfile(path, mode='r'):
+    ifd = open(path, mode)
+    #line1=ifd.readline()
+    #for line in ifd.readlines(): print(line)
+    ret=ifd.read()
+    ifd.close()
+    return ret
+
+def ascii(url):
+    #print(f'url={url}')
+    ret = ''
+    if not url.endswith(f':{PORT}/1'):
+        ret = readfile('static/img/survey_yellow.txt')
+
+    sourceip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+
+    now = datetime.now(timezone.utc)
+    statusline = f'[{now}] Request from {sourceip} to {serverhost}/{serverip}:{PORT}\n'
+    ret += statusline
+    print(statusline)
+    return ret
+
+## -- END   OF asciitext hack for wget/curl requests --------------------------------------------------
+
+@app.route('/1')
+def statusLine():
+    return ascii(request.base_url)
+
 @app.route('/')
 def index():
+    ua = request.headers.get('User-Agent').lower()
+    print(ua)
+    if 'curl/' in ua or 'wget/' in ua or 'httpie/' in ua:
+        return ascii(request.base_url)
     return render_template('index.html')
 
 @app.route('/start_survey', methods=['POST'])
