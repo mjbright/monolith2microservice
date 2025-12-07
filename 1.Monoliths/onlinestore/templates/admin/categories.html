@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Categories - Online Shop{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="admin-sidebar p-3 rounded">
+            <h5 class="text-white">Admin Panel</h5>
+            <nav class="nav flex-column">
+                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a class="nav-link" href="{{ url_for('admin_products') }}">
+                    <i class="fas fa-box"></i> Products
+                </a>
+                <a class="nav-link active" href="{{ url_for('admin_categories') }}">
+                    <i class="fas fa-tags"></i> Categories
+                </a>
+                <a class="nav-link" href="{{ url_for('admin_orders') }}">
+                    <i class="fas fa-shopping-cart"></i> Orders
+                </a>
+                <a class="nav-link" href="{{ url_for('admin_stock') }}">
+                    <i class="fas fa-warehouse"></i> Stock Management
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Categories</h2>
+            <a href="{{ url_for('admin_add_category') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Category
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Products</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                            <tr>
+                                <td>{{ category.id }}</td>
+                                <td>{{ category.name }}</td>
+                                <td>{{ category.description[:50] }}...</td>
+                                <td>{{ category.products|length }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">Edit</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

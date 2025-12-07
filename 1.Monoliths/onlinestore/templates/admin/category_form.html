@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Online Shop{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="admin-sidebar p-3 rounded">
+            <h5 class="text-white">Admin Panel</h5>
+            <nav class="nav flex-column">
+                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a class="nav-link" href="{{ url_for('admin_products') }}">
+                    <i class="fas fa-box"></i> Products
+                </a>
+                <a class="nav-link active" href="{{ url_for('admin_categories') }}">
+                    <i class="fas fa-tags"></i> Categories
+                </a>
+                <a class="nav-link" href="{{ url_for('admin_orders') }}">
+                    <i class="fas fa-shopping-cart"></i> Orders
+                </a>
+                <a class="nav-link" href="{{ url_for('admin_stock') }}">
+                    <i class="fas fa-warehouse"></i> Stock Management
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>{{ title }}</h2>
+            <a href="{{ url_for('admin_categories') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Categories
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control") }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.description.label(class="form-label") }}
+                        {{ form.description(class="form-control", rows="4") }}
+                    </div>
+
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

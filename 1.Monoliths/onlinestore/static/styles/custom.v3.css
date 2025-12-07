@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+/* Customizations to Bootstrap v5.1.3 */
+
+.bg-primary {
+  --bs-bg-opacity: 1;
+   /* orange: */
+   background-color: rgba( var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;*/
+
+}

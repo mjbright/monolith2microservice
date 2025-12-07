@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmation - Online Shop{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+    <h2>Order Confirmed!</h2>
+    <p class="lead">Thank you for your order. We'll process it shortly.</p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Order #{{ order.id }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Order Details</h6>
+                        <p><strong>Date:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                        <p><strong>Status:</strong> <span class="badge bg-warning">{{ order.status.title() }}</span></p>
+                        <p><strong>Payment:</strong> <span class="badge bg-info">{{ order.payment_status.title() }}</span></p>
+                        <p><strong>Total:</strong> <strong class="text-primary">${{ "%.2f"|format(order.total_amount) }}</strong></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Shipping Address</h6>
+                        <p>{{ order.shipping_address|replace('\n', '<br>')|safe }}</p>
+
+                        <h6>Payment Method</h6>
+                        <p>{{ order.payment_method.replace('_', ' ').title() }}</p>
+                    </div>
+                </div>
+
+                <h6>Items Ordered</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.order_items %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>${{ "%.2f"|format(item.unit_price) }}</td>
+                                <td>${{ "%.2f"|format(item.total_price) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('my_orders') }}" class="btn btn-primary">View All Orders</a>
+            <a href="{{ url_for('products') }}" class="btn btn-outline-primary">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

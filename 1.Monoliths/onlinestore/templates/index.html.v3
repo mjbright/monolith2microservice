@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Whizz Bargains - Online Shop{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+            <h1 class="display-4">Welcome to the Whizz Bargains - Online Shop!</h1>
+            <p class="lead">Discover amazing products at great prices.</p>
+            <a class="btn btn-light btn-lg" href="{{ url_for('products') }}">Shop Now</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Featured Products</h2>
+    </div>
+</div>
+
+<div class="row">
+    {% for product in products[:8] %}
+    <div class="col-md-3 mb-4">
+        <div class="card product-card h-100">
+            {% if product.image_url %}
+            <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                <i class="fas fa-image fa-3x text-muted"></i>
+            </div>
+            {% endif %}
+
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text flex-grow-1">{{ product.description[:100] }}...</p>
+                <div class="mt-auto">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="h5 text-primary">${{ "%.2f"|format(product.price) }}</span>
+                        <small class="text-muted">Stock: {{ product.stock_quantity }}</small>
+                    </div>
+                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-primary btn-sm mt-2">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if categories %}
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="mb-4">Shop by Category</h2>
+    </div>
+    {% for category in categories %}
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ category.name }}</h5>
+                <p class="card-text">{{ category.description }}</p>
+                <a href="{{ url_for('products', category=category.id) }}" class="btn btn-outline-primary">Browse</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
