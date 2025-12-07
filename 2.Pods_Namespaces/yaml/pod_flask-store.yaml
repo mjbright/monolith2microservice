@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: store
+  namespace: store
+
+  labels:
+    run: store
+
+spec:
+  containers:
+  - image: mjbright/flask-store:v1
+    name: store
+

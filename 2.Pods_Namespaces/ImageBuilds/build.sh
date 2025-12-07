@@ -165,3 +165,6 @@ START_S=$SECONDS
 
 TOOK $START_S_0 "All images"
 
+docker image ls | grep flask- | grep -v '<none>'
+
+

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: quiz
+  namespace: quiz
+
+  labels:
+    run: quiz
+
+spec:
+  #shareProcessNamespace: true
+
+  initContainers:
+  - image: alpine
+    name: init1
+    #restartPolicy: Never
+    restartPolicy: OnFailure
+    command:
+    - /bin/sh
+    - -c
+    - echo "Init container1 started ..."; sleep 4; echo "... exited"; exit 0
+
+  - image: alpine
+    name: init2
+    restartPolicy: Always
+    command:
+    - /bin/sh
+    - -c
+    - echo "Init container2 started ..."; sleep 4; echo "... exited"; exit 0
+
+  containers:
+  - image: mjbright/flask-quiz:v1
+    name: quiz
+
+  - image: mjbright/k8s-demo:alpine1
+    name: demo
+
+  - image: alpine
+    name: sleeper
+    command:
+    - /bin/sh
+    - -c
+    - sleep infinity
+
