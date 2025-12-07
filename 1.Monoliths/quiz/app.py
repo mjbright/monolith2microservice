@@ -128,7 +128,7 @@ def ascii(url):
     #print(f'url={url}')
     ret = ''
     if not url.endswith(f':{PORT}/1'):
-        ret = readfile('static/img/survey.txt')
+        ret = readfile('static/img/quiz.txt')
 
     sourceip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
