@@ -9,7 +9,7 @@ RUN python3 -m pip install -r requirements.txt
 
 ENV CONTAINER_IMAGE=mjbright/flask-survey:v3
 
-#COPY templates/index.html.v3     templates/index.html
+COPY templates/index.html.v3     templates/index.html
 COPY templates/base.html.v3      templates/base.html
 COPY static/style.css.v3         static/style.css
 COPY static/img/survey_red.txt   static/img/survey.txt

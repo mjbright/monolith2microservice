@@ -2,15 +2,15 @@
 
 {% block content %}
 <div class="welcome-section">
-    <h2>Welcome to Our Survey! [Version 1.0]</h2>
-    <p>Your feedback helps us improve our services. This survey should take about 5 minutes to complete.</p>
+    <h2>Welcome to the Online Quiz! [Version 3.0]</h2>
+    <p>Test your knowledge with our interactive quiz. Enter your name (or stay anonymous) and get started!</p>
     
-    <form id="start-survey-form" class="survey-form">
+    <form id="start-quiz-form" class="quiz-form">
         <div class="form-group">
             <label for="name">Your Name (optional):</label>
             <input type="text" id="name" name="name" placeholder="Enter your name or stay anonymous">
         </div>
-        <button type="submit" class="btn btn-primary">Start Survey</button>
+        <button type="submit" class="btn btn-primary">Start Quiz</button>
     </form>
     
     <div id="error-message" class="error-message" style="display: none;"></div>

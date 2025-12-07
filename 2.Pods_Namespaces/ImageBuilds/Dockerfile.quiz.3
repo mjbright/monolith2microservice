@@ -9,10 +9,10 @@ RUN python3 -m pip install -r requirements.txt
 
 ENV CONTAINER_IMAGE=mjbright/flask-quiz:v3
 
-#COPY templates/index.html.v3     templates/index.html
+COPY templates/index.html.v3     templates/index.html
 COPY templates/base.html.v3      templates/base.html
 COPY static/style.css.v3         static/style.css
-COPY static/img/quiz_red.txt   static/img/quiz.txt
+COPY static/img/quiz_red.txt     static/img/quiz.txt
 
 CMD  ["python3", "/app/app.py"]
 
