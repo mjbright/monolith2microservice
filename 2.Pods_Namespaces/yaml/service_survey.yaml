@@ -3,16 +3,16 @@ kind: Service
 
 metadata:
   labels:
-    run: quiz
-  name: quiz
-  namespace: quiz
+    run: survey
+  name: survey
+  namespace: survey
 
 spec:
   ports:
   - port: 5000
     protocol: TCP
     targetPort: 5000
-    nodePort:   30101
+    nodePort:   30103
   selector:
-    run: quiz
+    run: survey
   type: NodePort
