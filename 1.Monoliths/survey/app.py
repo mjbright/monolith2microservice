@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
 import json
 
-import os,sys
+import os, sys
 import socket, platform
 
 PORT = 5000
