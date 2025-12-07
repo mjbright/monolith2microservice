@@ -35,19 +35,19 @@ header {
 }
 
 header h1 {
-    color: #4a5568;
+    color: #4aff68;
     font-size: 2rem;
 }
 
 nav a {
     margin-left: 1rem;
     text-decoration: none;
-    color: #667eea;
+    color: #66ffea;
     font-weight: 500;
 }
 
 nav a:hover {
-    color: #764ba2;
+    color: #76ffa2;
 }
 
 /* Main content */
@@ -81,22 +81,22 @@ footer {
 }
 
 .btn-primary {
-    background: #667eea;
+    background: #66ffea;
     color: white;
 }
 
 .btn-primary:hover {
-    background: #764ba2;
+    background: #76ffa2;
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: #e2e8f0;
+    background: #e2fff0;
     color: #4a5568;
 }
 
 .btn-secondary:hover {
-    background: #cbd5e0;
+    background: #cbffe0;
 }
 
 /* Next button ready state */

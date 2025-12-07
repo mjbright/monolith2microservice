@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="welcome-section">
-    <h2>Welcome to Our Survey! [Version 1.0]</h2>
+    <h2>Welcome to Our Survey! [Version 2.0]</h2>
     <p>Your feedback helps us improve our services. This survey should take about 5 minutes to complete.</p>
     
     <form id="start-survey-form" class="survey-form">
