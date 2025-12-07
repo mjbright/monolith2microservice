@@ -44,7 +44,7 @@ A complete monolithic Flask application for an online shop with frontend store a
 
 2. **Run the Application**
    ```bash
-   python online_shop.py
+   python app.py
    ```
 
 3. **Access the Application**
@@ -123,7 +123,7 @@ To switch from SQLite to PostgreSQL:
    pip install psycopg2-binary
    ```
 
-2. **Update database URI in online_shop.py**
+2. **Update database URI in app.py**
    ```python
    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/shop_db'
    ```
@@ -136,9 +136,9 @@ To switch from SQLite to PostgreSQL:
 ## File Structure
 
 ```
-online_shop/
-├── online_shop.py          # Main Flask application
-├── online_shop.db          # SQLite database (auto-generated)
+onlinestore/
+├── app.py          # Main Flask application
+├── instances/online_shop.db          # SQLite database (auto-generated)
 ├── templates/              # HTML templates
 │   ├── base.html          # Base template
 │   ├── index.html         # Homepage

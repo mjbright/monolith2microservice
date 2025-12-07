@@ -1,5 +1,7 @@
 
 [ -f ~/.venv/flask/bin/activate ] && source  ~/.venv/flask/bin/activate
 
-python3 online_shop.py 5002
+[ -z "$1" ] && set -- 5000
+
+python3 app.py $1
 

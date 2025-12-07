@@ -7,7 +7,9 @@ cd $( dirname $0 )
 mv instance/quiz.db instance/quiz.db.bak
 python3 -m pip install -r requirements.txt
 
+[ -z "$1" ] && set -- 5000
+
 set -x
-./app.py
+./app.py $1
 
 

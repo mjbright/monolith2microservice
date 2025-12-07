@@ -6,7 +6,9 @@ cd $( dirname $0 )
 
 python3 -m pip install -r requirements.txt
 
+[ -z "$1" ] && set -- 5000
+
 set -x
-./app.py
+./app.py $1
 
 
