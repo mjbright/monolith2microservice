@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quiz-1
+  namespace: test-quiz
+  labels:
+    run: quiz-1
+spec:
+  containers:
+  - image: mjbright/flask-quiz:v1
+    name: quiz
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quiz-2
+  namespace: test-quiz
+  labels:
+    run: quiz-2
+spec:
+  containers:
+  - image: mjbright/flask-quiz:v2
+    name: quiz
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quiz-3
+  namespace: test-quiz
+  labels:
+    run: quiz-3
+spec:
+  containers:
+  - image: mjbright/flask-quiz:v3
+    name: quiz
+

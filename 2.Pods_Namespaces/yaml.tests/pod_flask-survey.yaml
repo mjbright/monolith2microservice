@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: survey-1
+  namespace: test-survey
+  labels:
+    run: survey-1
+spec:
+  containers:
+  - image: mjbright/flask-survey:v1
+    name: survey
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: survey-2
+  namespace: test-survey
+  labels:
+    run: survey-2
+spec:
+  containers:
+  - image: mjbright/flask-survey:v2
+    name: survey
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: survey-3
+  namespace: test-survey
+  labels:
+    run: survey-3
+spec:
+  containers:
+  - image: mjbright/flask-survey:v3
+    name: survey
+

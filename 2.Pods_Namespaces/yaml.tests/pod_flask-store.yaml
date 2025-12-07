@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: store-1
+  namespace: test-store
+  labels:
+    run: store-1
+spec:
+  containers:
+  - image: mjbright/flask-store:v1
+    name: store
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: store-2
+  namespace: test-store
+  labels:
+    run: store-2
+spec:
+  containers:
+  - image: mjbright/flask-store:v2
+    name: store
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: store-3
+  namespace: test-store
+  labels:
+    run: store-3
+spec:
+  containers:
+  - image: mjbright/flask-store:v3
+    name: store
+
