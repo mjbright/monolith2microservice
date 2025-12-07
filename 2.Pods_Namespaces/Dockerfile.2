@@ -1,0 +1,18 @@
+FROM python:3.14.1-trixie
+#FROM python:3.14.1-slim-trixie
+
+WORKDIR /app
+
+ADD . /app
+
+RUN python3 -m pip install -r requirements.txt
+
+ENV CONTAINER_IMAGE=mjbright/flask-store:v2
+
+COPY templates/index.html.v2     templates/index.html
+COPY templates/base.html.v2      templates/base.html
+COPY static/styles/custom.v2.css static/styles/custom.css
+COPY static/img/store_green.txt  static/img/store.txt
+
+CMD  ["python3", "/app/online_shop.py"]
+
