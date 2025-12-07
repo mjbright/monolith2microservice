@@ -7,12 +7,29 @@ from wtforms import StringField, TextAreaField, DecimalField, IntegerField, Sele
 from wtforms.validators import DataRequired, Email, NumberRange, Length
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime, timezone
 import os,sys
 
 PORT=5000
 if len(sys.argv) > 1:
     PORT=sys.argv[1]
+
+import socket, platform
+
+os = platform.system()
+#print(os)
+match os:
+    case "Linux":
+        serverhost=socket.gethostname()
+        serverip=socket.gethostbyname(socket.gethostname())
+    case "Darwin":
+        serverhost=socket.gethostname()
+        serverip=[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.
+SOCK_DGRAM)]][0][1]
+    case _:
+        print(f'Unknown OS type {os}')
+        sys.exit(1)
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -383,8 +400,35 @@ class BillingService:
 # ROUTES - FRONTEND STORE
 # ============================================================================
 
+## -- START OF asciitext hack for wget/curl requests --------------------------------------------------
+
+def ascii(url):
+    #print(f'url={url}')
+    ret = ''
+    if not url.endswith(f':{PORT}/1'):
+        ret = readfile('static/img/store_cyan.txt')
+
+    sourceip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+
+    now = datetime.now(timezone.utc)
+    statusline = f'[{now}] Request from {sourceip} to {serverhost}/{serverip}:{PORT}\n'
+    ret += statusline
+    print(statusline)
+    return ret
+
+## -- END   OF asciitext hack for wget/curl requests --------------------------------------------------
+
+@app.route('/1')
+def statusLine():
+    return ascii(request.base_url)
+
 @app.route('/')
 def index():
+    ua = request.headers.get('User-Agent').lower()
+    print(ua)
+    if 'curl/' in ua or 'wget/' in ua or 'httpie/' in ua:
+        return ascii(request.base_url)
+
     """Homepage with featured products"""
     products = CatalogService.get_all_products()
     categories = CatalogService.get_categories()
